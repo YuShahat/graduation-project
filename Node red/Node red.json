@@ -1,0 +1,286 @@
+[
+    {
+        "id": "fe112c750ac96b19",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "15979e1b7c3f42d1",
+        "type": "group",
+        "z": "fe112c750ac96b19",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "b454b2e410c3bbc6",
+            "a780eb8ab4a396b6",
+            "212fa7784faec7dd",
+            "101bd55e5d627fce",
+            "e02e1cc139be3f92",
+            "814ecca8958026f6",
+            "f4bd18c64126f61a",
+            "efa990ed07a8827a"
+        ],
+        "x": 154,
+        "y": 299,
+        "w": 672,
+        "h": 282
+    },
+    {
+        "id": "b454b2e410c3bbc6",
+        "type": "serial in",
+        "z": "fe112c750ac96b19",
+        "g": "15979e1b7c3f42d1",
+        "name": "HENDO",
+        "serial": "81b216b9cf194200",
+        "x": 240,
+        "y": 380,
+        "wires": [
+            [
+                "a780eb8ab4a396b6"
+            ]
+        ]
+    },
+    {
+        "id": "a780eb8ab4a396b6",
+        "type": "function",
+        "z": "fe112c750ac96b19",
+        "g": "15979e1b7c3f42d1",
+        "name": "DHT COND>>>>>>>",
+        "func": "m = msg.payload.split(',');\nH = { payload: parseFloat(m[0]) };\nT = { payload: parseFloat(m[1]) };\n\nreturn [H, T];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 380,
+        "wires": [
+            [
+                "101bd55e5d627fce"
+            ],
+            [
+                "212fa7784faec7dd"
+            ]
+        ]
+    },
+    {
+        "id": "212fa7784faec7dd",
+        "type": "ui_gauge",
+        "z": "fe112c750ac96b19",
+        "g": "15979e1b7c3f42d1",
+        "name": "",
+        "group": "47c12cfa70a4ce79",
+        "order": 1,
+        "width": "4",
+        "height": "4",
+        "gtype": "gage",
+        "title": "HUMIDITY",
+        "label": "units",
+        "format": "{{value}}%",
+        "min": 0,
+        "max": "80",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 710,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "101bd55e5d627fce",
+        "type": "ui_gauge",
+        "z": "fe112c750ac96b19",
+        "g": "15979e1b7c3f42d1",
+        "name": "",
+        "group": "47c12cfa70a4ce79",
+        "order": 0,
+        "width": "4",
+        "height": "4",
+        "gtype": "gage",
+        "title": "TEMPERATURE",
+        "label": "units",
+        "format": "{{value}}°C",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 710,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "e02e1cc139be3f92",
+        "type": "firebase.on",
+        "z": "fe112c750ac96b19",
+        "g": "15979e1b7c3f42d1",
+        "name": "API MAP",
+        "firebaseconfig": "",
+        "childpath": "",
+        "atStart": true,
+        "eventType": "value",
+        "queries": [],
+        "x": 240,
+        "y": 500,
+        "wires": [
+            [
+                "f4bd18c64126f61a"
+            ]
+        ],
+        "icon": "font-awesome/fa-map-marker"
+    },
+    {
+        "id": "814ecca8958026f6",
+        "type": "debug",
+        "z": "fe112c750ac96b19",
+        "g": "15979e1b7c3f42d1",
+        "name": "DEBUGGING",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "f4bd18c64126f61a",
+        "type": "change",
+        "z": "fe112c750ac96b19",
+        "g": "15979e1b7c3f42d1",
+        "name": "PAYLOAD",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.name",
+                "pt": "msg",
+                "to": "IIS",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.lat",
+                "pt": "msg",
+                "to": "payload.LAT",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.lon",
+                "pt": "msg",
+                "to": "payload.LNG",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 500,
+        "wires": [
+            [
+                "814ecca8958026f6",
+                "efa990ed07a8827a"
+            ]
+        ]
+    },
+    {
+        "id": "efa990ed07a8827a",
+        "type": "worldmap",
+        "z": "fe112c750ac96b19",
+        "g": "15979e1b7c3f42d1",
+        "name": "MAP TRACKER",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "OSMG",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "false",
+        "coords": "none",
+        "showgrid": "false",
+        "showruler": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "overlist": "DR,CO,RA,DN",
+        "maplist": "OSMG,OSMC,EsriC,EsriS,UKOS",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 700,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "81b216b9cf194200",
+        "type": "serial-port",
+        "name": "HENDO",
+        "serialport": "COM4",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "47c12cfa70a4ce79",
+        "type": "ui_group",
+        "name": "Temperature and Humidity Sensor",
+        "tab": "522c9d2d0ab2d9e5",
+        "order": 1,
+        "disp": true,
+        "width": "9",
+        "collapse": false
+    },
+    {
+        "id": "522c9d2d0ab2d9e5",
+        "type": "ui_tab",
+        "name": "Temperature/Humidity",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
